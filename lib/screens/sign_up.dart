@@ -1,8 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
+import 'package:learn_ease/screens/sign_in.dart';
+import 'package:email_validator/email_validator.dart';
 
 class signUp extends StatefulWidget {
   const signUp({super.key});
+  static const routeName = '/sign up';
 
   @override
   State<signUp> createState() => _signUpState();
@@ -13,20 +17,31 @@ class _signUpState extends State<signUp> {
   String? _email;
   String? _fName;
   String? _lName;
-  String? _password;
-  String? _confirmPassword;
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController? _confirmPassword = TextEditingController();
   Map _userData = {};
   List<Map> allUsers = [];
+
+  String? validatePassword(String value) {
+    RegExp regex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (!regex.hasMatch(value)) {
+      return 'Enter valid password';
+    }
+    return null;
+  }
+
+  String email = 'fredrik.eilertsen@gail.com';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(top: 70, left: 15, right: 15),
+          margin: const EdgeInsets.only(top: 70, left: 15, right: 15),
           child: Column(
             children: [
-              Column(
+              const Column(
                 children: [
                   Text(
                     'Sign Up',
@@ -39,11 +54,11 @@ class _signUpState extends State<signUp> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.always,
                 key: _key,
                 child: Column(
                   children: [
@@ -56,7 +71,7 @@ class _signUpState extends State<signUp> {
                             child: ListTile(
                               title: Text('First Name'),
                               subtitle: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8)),
@@ -66,6 +81,8 @@ class _signUpState extends State<signUp> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Enter your first name';
+                                  } else if (value.length <= 2) {
+                                    return 'Too short, must be 3-characters at least';
                                   }
                                   return null;
                                 },
@@ -78,9 +95,9 @@ class _signUpState extends State<signUp> {
                           Expanded(
                             flex: 1,
                             child: ListTile(
-                              title: Text('Last Name'),
+                              title: const Text('Last Name'),
                               subtitle: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8)),
@@ -90,6 +107,8 @@ class _signUpState extends State<signUp> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Enter your Last name';
+                                  } else if (value.length <= 2) {
+                                    return 'Too short, must be 3-characters at least';
                                   }
                                   return null;
                                 },
@@ -103,12 +122,13 @@ class _signUpState extends State<signUp> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 25),
+                      margin: const EdgeInsets.only(top: 25),
                       height: 60,
                       child: ListTile(
-                        title: Text('Email'),
+                        title: const Text('Email'),
                         subtitle: TextFormField(
-                          decoration: InputDecoration(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
@@ -118,8 +138,7 @@ class _signUpState extends State<signUp> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Enter your email';
-                            } else if (!value.contains("@") ||
-                                !value.contains(".")) {
+                            } else if (!EmailValidator.validate(value!)) {
                               return 'please enter valid email';
                             }
 
@@ -133,52 +152,52 @@ class _signUpState extends State<signUp> {
                     ),
                     Container(
                       height: 60,
-                      margin: EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20),
                       child: ListTile(
-                        title: Text('Password'),
+                        title: const Text('Password'),
                         subtitle: TextFormField(
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
                             ),
                             hintText: 'Password',
                           ),
+                          controller: _password,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Enter your password';
+                              return 'Please enter password';
+                            } else if (validatePassword(value) != null) {
+                              return 'password must contains at least(8-character,Upper+Lower case,number,symbol)';
                             }
                             return null;
-                          },
-                          onSaved: (value) {
-                            _password = value!;
                           },
                         ),
                       ),
                     ),
                     Container(
                       height: 60,
-                      margin: EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20),
                       child: ListTile(
-                        title: Text('Confirm Password'),
+                        title: const Text('Confirm Password'),
                         subtitle: TextFormField(
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
                             ),
                             hintText: 'Re-enter the same Password',
                           ),
+                          controller: _confirmPassword,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Enter the same password';
+                            } else if (value != _password!.text) {
+                              return 'password not match';
                             }
                             return null;
-                          },
-                          onSaved: (value) {
-                            _confirmPassword = value!;
                           },
                         ),
                       ),
@@ -195,25 +214,25 @@ class _signUpState extends State<signUp> {
                                 'First name': _fName,
                                 'Last name': _lName,
                                 'email': _email,
-                                'password': _password,
-                                'confirm password': _confirmPassword,
+                                'password': _password!.text,
                               };
                               allUsers.add(_userData);
-                              Navigator.pushNamed(context, 'sign in',
+                              Navigator.pushNamed(context, signIn.routeName,
                                   arguments: UserClass(allUsers));
                             } else {
                               print('Sign up failed');
+                              
                             }
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                const Color.fromRGBO(104, 73, 239, 1)),
+                            backgroundColor: const MaterialStatePropertyAll(
+                                Color.fromRGBO(104, 73, 239, 1)),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'SIGN UP',
                             style: TextStyle(
                               fontSize: 18,
@@ -223,9 +242,9 @@ class _signUpState extends State<signUp> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, 'sign in');
+                          Navigator.pushNamed(context, signIn.routeName);
                         },
-                        child: Text('Already Have an account? Sign In')),
+                        child: const Text('Already Have an account? Sign In')),
                   ],
                 ),
               ),

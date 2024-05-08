@@ -1,13 +1,12 @@
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
+import 'package:learn_ease/screens/sign_up.dart';
 
 class signIn extends StatefulWidget {
   const signIn({super.key});
+
+  static const routeName = '/sign in';
 
   @override
   State<signIn> createState() => _signInState();
@@ -25,10 +24,10 @@ class _signInState extends State<signIn> {
     return Scaffold(
         body: Center(
       child: Container(
-        margin: EdgeInsets.only(top: 70, left: 15, right: 15),
+        margin: const EdgeInsets.only(top: 70, left: 15, right: 15),
         child: Column(
           children: [
-            Column(
+            const Column(
               children: [
                 Text(
                   'Sign In',
@@ -41,7 +40,7 @@ class _signInState extends State<signIn> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Form(
@@ -81,7 +80,7 @@ class _signInState extends State<signIn> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -118,7 +117,7 @@ class _signInState extends State<signIn> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 7),
+                      margin: const EdgeInsets.only(top: 20, bottom: 7),
                       width: 370,
                       height: 50,
                       child: ElevatedButton(
@@ -137,14 +136,14 @@ class _signInState extends State<signIn> {
                             }
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                const Color.fromRGBO(104, 73, 239, 1)),
+                            backgroundColor: const MaterialStatePropertyAll(
+                                Color.fromRGBO(104, 73, 239, 1)),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)),
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'SIGN IN',
                             style: TextStyle(
                               fontSize: 18,
@@ -154,9 +153,9 @@ class _signInState extends State<signIn> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, 'sign up');
+                          Navigator.pushNamed(context, signUp.routeName);
                         },
-                        child: Text('Don’t you have an account? Sign Up')),
+                        child: const Text('Don’t you have an account? Sign Up')),
                   ],
                 ))
           ],

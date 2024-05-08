@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:learn_ease/screens/sign_up.dart';
@@ -16,10 +15,10 @@ class learnEase extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        'page1': (context) => Page1(),
+        Page1.routeName: (context) => const Page1(),
         '/': (context) => HomePage(),
-        'sign in': (context) => signIn(),
-        'sign up': (context) => signUp(),
+        signIn.routeName: (context) => const signIn(),
+        signUp.routeName: (context) => const signUp(),
       },
       initialRoute: '/',
     );
@@ -61,8 +60,8 @@ class _HomePageState extends State<HomePage> {
   Color selectedColor = Colors.blue;
 
   Widget circleAvatar = Container(
-    margin: EdgeInsets.only(right: 10),
-    child: CircleAvatar(
+    margin: const EdgeInsets.only(right: 10),
+    child: const CircleAvatar(
       backgroundColor: Colors.grey,
       radius: 5,
     ),
@@ -76,18 +75,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    _buildList();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
           //width: 370,
-          margin: EdgeInsets.only(top: 90),
+          margin: const EdgeInsets.only(top: 90),
           child: Column(
             children: [
               Column(
@@ -116,8 +109,7 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Container(
-                      child: Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
@@ -128,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                             itemCount: images.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
-                                margin: EdgeInsets.only(right: 5),
+                                margin: const EdgeInsets.only(right: 5),
                                 child: CircleAvatar(
                                   backgroundColor: index == currentIndex
                                       ? selectedColor
@@ -139,10 +131,10 @@ class _HomePageState extends State<HomePage> {
                             }),
                       ),
                     ],
-                  ))
+                  )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
               Container(
@@ -150,8 +142,8 @@ class _HomePageState extends State<HomePage> {
                 width: 250,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (currentIndex == images.length - 1) {
-                      Navigator.pushNamed(context, 'page1');
+                    if (buttonText == 'GO TO THE APP') {
+                      Navigator.pushNamed(context, Page1.routeName);
                     }
                     setState(() {
                       if (currentIndex < images.length - 1) {
@@ -163,8 +155,8 @@ class _HomePageState extends State<HomePage> {
                     });
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        const Color.fromRGBO(104, 73, 239, 1)),
+                    backgroundColor: const MaterialStatePropertyAll(
+                        Color.fromRGBO(104, 73, 239, 1)),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
@@ -172,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Text(
                     buttonText,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,
                     ),
@@ -181,12 +173,11 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, 'page1');
+                  Navigator.pushNamed(context, Page1.routeName);
                 },
-                child: Text('Skip',
+                child: const Text('Skip',
                     style: TextStyle(
-                        fontSize: 18,
-                        color: const Color.fromRGBO(141, 137, 137, 1))),
+                        fontSize: 18, color: Color.fromRGBO(141, 137, 137, 1))),
               )
             ],
           ),

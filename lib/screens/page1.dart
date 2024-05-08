@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:learn_ease/screens/sign_in.dart';
+import 'package:learn_ease/screens/sign_up.dart';
 
 class Page1 extends StatelessWidget {
   const Page1({super.key});
+  static const routeName = '/page1';
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class Page1 extends StatelessWidget {
                       width: 171,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, 'sign in');
+                          Navigator.pushNamed(context, signIn.routeName);
                         },
                         child: Text(
                           'SIGN IN',
@@ -73,7 +76,7 @@ class Page1 extends StatelessWidget {
                       width: 171,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, 'sign up');
+                          Navigator.pushNamed(context, signUp.routeName);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
