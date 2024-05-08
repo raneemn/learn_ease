@@ -1,16 +1,23 @@
 # learn_ease
 
-A new Flutter project.
+## practical application about what i learned in flutter-1 course at SDK-center 
+## we will create app as udemy app 
 
-## Getting Started
+------------------
 
-This project is a starting point for a Flutter application.
+| class |title |click here|
+|-|-|-|
+| 1 |first class |[click here](./lessons/lesson1.md)|
+| 2 |first class |[click here](./lessons/lesson2.md)|
+| 3 |first class |[click here](./lessons/lesson3.md)|
+| 4 |first class |[click here](./lessons/lesson4.md)|
+| 5 |first class |[click here](./lessons/lesson5.md)|
+| 6 |first class |[click here](./lessons/lesson6.md)|
+| 7 |first class |[click here](./lessons/lesson7.md)|
+| 8 |first class |[click here](./lessons/lesson8.md)|
+| 9 |first class |[click here](./lessons/lesson9.md)|
+| 10 |first class |[click here](./lessons/lesson10.md)|
+| 11 |first class |[click here](./lessons/lesson11.md)|
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
