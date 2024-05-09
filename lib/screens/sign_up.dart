@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
+import 'package:learn_ease/packages/userInfo.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -19,8 +19,8 @@ class _signUpState extends State<signUp> {
   String? _lName;
   final TextEditingController _password = TextEditingController();
   final TextEditingController? _confirmPassword = TextEditingController();
-  Map _userData = {};
-  List<Map> allUsers = [];
+  userInfo? _userData;
+  List<userInfo> allUsers = [];
 
   String? validatePassword(String value) {
     RegExp regex =
@@ -69,7 +69,7 @@ class _signUpState extends State<signUp> {
                           Expanded(
                             flex: 1,
                             child: ListTile(
-                              title: Text('First Name'),
+                              title: const Text('First Name'),
                               subtitle: TextFormField(
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(
@@ -138,7 +138,7 @@ class _signUpState extends State<signUp> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Enter your email';
-                            } else if (!EmailValidator.validate(value!)) {
+                            } else if (!EmailValidator.validate(value)) {
                               return 'please enter valid email';
                             }
 
@@ -194,7 +194,7 @@ class _signUpState extends State<signUp> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Enter the same password';
-                            } else if (value != _password!.text) {
+                            } else if (value != _password.text) {
                               return 'password not match';
                             }
                             return null;
@@ -203,25 +203,30 @@ class _signUpState extends State<signUp> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 35, bottom: 7),
+                      margin: const EdgeInsets.only(top: 35, bottom: 7),
                       width: 330,
                       height: 50,
                       child: ElevatedButton(
                           onPressed: () {
                             if (_key.currentState!.validate()) {
                               _key.currentState!.save();
-                              _userData = {
+                              _userData = userInfo(
+                                  fName: _fName,
+                                  lName: _lName,
+                                  email: _email,
+                                  password: _password.text);
+                              /*_userData = {
                                 'First name': _fName,
                                 'Last name': _lName,
                                 'email': _email,
-                                'password': _password!.text,
-                              };
-                              allUsers.add(_userData);
+                                'password': _password.text,
+                              };*/
+                              allUsers.add(_userData!);
+                              print(_userData);
                               Navigator.pushNamed(context, signIn.routeName,
-                                  arguments: UserClass(allUsers));
+                                  arguments: UserClass(allUsers!));
                             } else {
                               print('Sign up failed');
-                              
                             }
                           },
                           style: ButtonStyle(
@@ -242,7 +247,7 @@ class _signUpState extends State<signUp> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, signIn.routeName);
+                          // Navigator.pushNamed(context, signIn.routeName);
                         },
                         child: const Text('Already Have an account? Sign In')),
                   ],

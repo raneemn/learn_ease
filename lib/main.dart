@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:learn_ease/screens/sign_up.dart';
+import 'package:learn_ease/screens/user_profile.dart';
 
 void main() {
   runApp(const learnEase());
@@ -19,6 +20,7 @@ class learnEase extends StatelessWidget {
         '/': (context) => HomePage(),
         signIn.routeName: (context) => const signIn(),
         signUp.routeName: (context) => const signUp(),
+        userProfile.routeName :(context) => const userProfile(),
       },
       initialRoute: '/',
     );

@@ -1,7 +1,9 @@
-
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
+import 'package:learn_ease/packages/userInfo.dart';
 import 'package:learn_ease/screens/sign_up.dart';
+import 'package:learn_ease/screens/user_profile.dart';
 
 class signIn extends StatefulWidget {
   const signIn({super.key});
@@ -16,11 +18,39 @@ class _signInState extends State<signIn> {
   final GlobalKey<FormState> _key = GlobalKey();
   String? _email;
   String? _pass;
+  userInfo? user;
+
+  String? validatePassword(String value) {
+    RegExp regex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (!regex.hasMatch(value)) {
+      return 'Enter valid password';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as UserClass;
     print('args ${args.allUsers}');
+
+    Future<void> _showMyDialog(String errorTitle,String errorMsg) async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title:  Text(errorTitle),
+          content:  Text(errorMsg,
+              style: TextStyle(fontSize: 25)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
         body: Center(
       child: Container(
@@ -44,16 +74,20 @@ class _signInState extends State<signIn> {
               height: 40,
             ),
             Form(
+                autovalidateMode: AutovalidateMode.always,
                 key: _key,
                 child: Column(
                   children: [
                     TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       onSaved: (value) {
                         _email = value;
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Enter your valid email';
+                          return 'Enter your email';
+                        } else if (!EmailValidator.validate(value)) {
+                          return 'please enter valid email';
                         }
                         return null;
                       },
@@ -61,7 +95,7 @@ class _signInState extends State<signIn> {
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: 'Email Address',
-                        hintText: 'youremail@gmail.com',
+                        hintText: 'youremail@mail.com',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.black,
@@ -84,6 +118,7 @@ class _signInState extends State<signIn> {
                       height: 20,
                     ),
                     TextFormField(
+                      obscureText: true,
                       onSaved: (value) {
                         _pass = value;
                       },
@@ -124,13 +159,18 @@ class _signInState extends State<signIn> {
                           onPressed: () {
                             if (_key.currentState!.validate()) {
                               _key.currentState!.save();
-                              print('object');
                               for (int i = 0; i < args.allUsers.length; i++) {
-                                print('for loop');
-                                if (_email == args.allUsers[i]['email']) {
-                                  if (_pass == args.allUsers[i]['password']) {
-                                    print(args.allUsers);
+                                if (_email == args.allUsers[i].email) {
+                                  if (_pass == args.allUsers[i].password) {
+                                    print(args.allUsers[i]);
+                                    Navigator.pushNamed(
+                                        context, userProfile.routeName,
+                                        arguments: args.allUsers[i]);
+                                  } else {
+                                    _showMyDialog('password' ,'password not correct');
                                   }
+                                } else {
+                                  _showMyDialog('email','This email is not register yet, Sign up please');
                                 }
                               }
                             }
@@ -155,7 +195,8 @@ class _signInState extends State<signIn> {
                         onTap: () {
                           Navigator.pushNamed(context, signUp.routeName);
                         },
-                        child: const Text('Don’t you have an account? Sign Up')),
+                        child:
+                            const Text('Don’t you have an account? Sign Up')),
                   ],
                 ))
           ],

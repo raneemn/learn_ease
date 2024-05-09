@@ -1,5 +1,7 @@
+import 'package:learn_ease/packages/userInfo.dart';
+
 class UserClass {
-  List<Map> allUsers;
+    List<userInfo> allUsers ;
 
   UserClass(this.allUsers);
 }
