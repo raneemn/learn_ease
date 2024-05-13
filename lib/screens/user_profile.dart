@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
 import 'package:learn_ease/packages/userInfo.dart';
 
-class userProfile extends StatelessWidget {
-  const userProfile({super.key});
+class UserProfile extends StatelessWidget {
+  const UserProfile({super.key});
   static const routeName = '/User Profile';
 
   @override
@@ -27,16 +27,17 @@ class userProfile extends StatelessWidget {
           children: [
             Text(
               'First name: ${args.fName!}',
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
             Text(
               'Last name: ${args.lName!}',
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
             Text(
               'Email: ${args.email!}',
-              style: TextStyle(fontSize: 25),
+              style: const TextStyle(fontSize: 25),
             ),
+            
           ],
         ),
       ),

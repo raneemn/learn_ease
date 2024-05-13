@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_ease/screens/home.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:learn_ease/screens/sign_up.dart';
@@ -18,9 +19,10 @@ class learnEase extends StatelessWidget {
       routes: {
         Page1.routeName: (context) => const Page1(),
         '/': (context) => HomePage(),
-        signIn.routeName: (context) => const signIn(),
-        signUp.routeName: (context) => const signUp(),
-        userProfile.routeName :(context) => const userProfile(),
+        SignIn.routeName: (context) => const SignIn(),
+        SignUp.routeName: (context) => const SignUp(),
+        UserProfile.routeName: (context) => const UserProfile(),
+        HomePage2.routeName: (context) => const HomePage2(),
       },
       initialRoute: '/',
     );
@@ -175,7 +177,7 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, Page1.routeName);
+                  Navigator.pushNamed(context, HomePage2.routeName);
                 },
                 child: const Text('Skip',
                     style: TextStyle(

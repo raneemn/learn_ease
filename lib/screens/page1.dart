@@ -50,7 +50,7 @@ class Page1 extends StatelessWidget {
                       width: 171,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, signIn.routeName);
+                          Navigator.pushNamed(context, SignIn.routeName);
                         },
                         child: Text(
                           'SIGN IN',
@@ -76,7 +76,7 @@ class Page1 extends StatelessWidget {
                       width: 171,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, signUp.routeName);
+                          Navigator.pushNamed(context, SignUp.routeName);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(

@@ -4,15 +4,15 @@ import 'package:learn_ease/packages/userInfo.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:email_validator/email_validator.dart';
 
-class signUp extends StatefulWidget {
-  const signUp({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
   static const routeName = '/sign up';
 
   @override
-  State<signUp> createState() => _signUpState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _signUpState extends State<signUp> {
+class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _key = GlobalKey();
   String? _email;
   String? _fName;
@@ -203,7 +203,7 @@ class _signUpState extends State<signUp> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 35, bottom: 7),
+                      margin: const EdgeInsets.only(top: 35),
                       width: 330,
                       height: 50,
                       child: ElevatedButton(
@@ -215,15 +215,10 @@ class _signUpState extends State<signUp> {
                                   lName: _lName,
                                   email: _email,
                                   password: _password.text);
-                              /*_userData = {
-                                'First name': _fName,
-                                'Last name': _lName,
-                                'email': _email,
-                                'password': _password.text,
-                              };*/
+
                               allUsers.add(_userData!);
                               print(_userData);
-                              Navigator.pushNamed(context, signIn.routeName,
+                              Navigator.pushNamed(context, SignIn.routeName,
                                   arguments: UserClass(allUsers!));
                             } else {
                               print('Sign up failed');
@@ -245,11 +240,47 @@ class _signUpState extends State<signUp> {
                             ),
                           )),
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          // Navigator.pushNamed(context, signIn.routeName);
+                    TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed))
+                                return Colors.blue.withOpacity(0.12);
+                              return null; // Defer to the widget's default.
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignIn.routeName,
+                              arguments: UserClass(allUsers));
                         },
                         child: const Text('Already Have an account? Sign In')),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Color.fromARGB(221, 15, 0, 0),
+                          minimumSize: Size(100, 50),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                          ),
+                        ).copyWith(
+                          side: MaterialStateProperty.resolveWith<BorderSide?>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return BorderSide(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  width: 1,
+                                );
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text('Outline Button'))
                   ],
                 ),
               ),

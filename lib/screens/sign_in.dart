@@ -5,16 +5,16 @@ import 'package:learn_ease/packages/userInfo.dart';
 import 'package:learn_ease/screens/sign_up.dart';
 import 'package:learn_ease/screens/user_profile.dart';
 
-class signIn extends StatefulWidget {
-  const signIn({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   static const routeName = '/sign in';
 
   @override
-  State<signIn> createState() => _signInState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _signInState extends State<signIn> {
+class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> _key = GlobalKey();
   String? _email;
   String? _pass;
@@ -34,13 +34,12 @@ class _signInState extends State<signIn> {
     final args = ModalRoute.of(context)!.settings.arguments as UserClass;
     print('args ${args.allUsers}');
 
-    Future<void> _showMyDialog(String errorTitle,String errorMsg) async {
+    Future<void> _showMyDialog(String errorTitle, String errorMsg) async {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title:  Text(errorTitle),
-          content:  Text(errorMsg,
-              style: TextStyle(fontSize: 25)),
+          title: Text(errorTitle),
+          content: Text(errorMsg, style: TextStyle(fontSize: 25)),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'OK'),
@@ -152,7 +151,7 @@ class _signInState extends State<signIn> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 7),
+                      margin: const EdgeInsets.only(top: 20),
                       width: 370,
                       height: 50,
                       child: ElevatedButton(
@@ -164,13 +163,15 @@ class _signInState extends State<signIn> {
                                   if (_pass == args.allUsers[i].password) {
                                     print(args.allUsers[i]);
                                     Navigator.pushNamed(
-                                        context, userProfile.routeName,
+                                        context, UserProfile.routeName,
                                         arguments: args.allUsers[i]);
                                   } else {
-                                    _showMyDialog('password' ,'password not correct');
+                                    _showMyDialog(
+                                        'password', 'password not correct');
                                   }
                                 } else {
-                                  _showMyDialog('email','This email is not register yet, Sign up please');
+                                  _showMyDialog('email',
+                                      'This email is not register yet, Sign up please');
                                 }
                               }
                             }
@@ -191,9 +192,24 @@ class _signInState extends State<signIn> {
                             ),
                           )),
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, signUp.routeName);
+                    TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed))
+                                return Colors.blue.withOpacity(0.15);
+                              return null; // Defer to the widget's default.
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            SignUp.routeName,
+                          );
                         },
                         child:
                             const Text('Don’t you have an account? Sign Up')),
