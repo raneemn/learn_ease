@@ -17,7 +17,9 @@
 | 8 |dart intro githup |[click here](./lessons/lesson8.md)|
 | 9 |register form |[click here](./lessons/lesson9.md)|
 | 10 |register with login |[click here](./lessons/lesson10.md)|
-| 11 |not yet |[click here](./lessons/lesson11.md)|
+| 11 |Gesture Detector |[click here](./lessons/lesson11.md)|
+| 12 |Student app home screen |[click here](./lessons/lesson12.md)|
+| 13 |scroll |[click here](./lessons/lesson13.md)|
 
 
 
