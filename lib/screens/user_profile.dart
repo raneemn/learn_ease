@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learn_ease/packages/loginAndReg.dart';
 import 'package:learn_ease/packages/userInfo.dart';
 
 class UserProfile extends StatelessWidget {
