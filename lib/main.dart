@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_ease/Course/CourseMain.dart';
 import 'package:learn_ease/screens/home.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
@@ -16,6 +17,7 @@ class learnEase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         Page1.routeName: (context) => const Page1(),
         '/': (context) => HomePage(),
@@ -23,6 +25,7 @@ class learnEase extends StatelessWidget {
         SignUp.routeName: (context) => const SignUp(),
         UserProfile.routeName: (context) => const UserProfile(),
         HomePage2.routeName: (context) => const HomePage2(),
+        Course.routeName: (context) => const Course(),
       },
       initialRoute: '/',
     );

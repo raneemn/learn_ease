@@ -44,7 +44,7 @@ class _HomePage2State extends State<HomePage2> {
           selectedItemColor: Colors.white,
           backgroundColor: const Color.fromRGBO(104, 73, 239, 1),
           iconSize: 25,
-          items: const <BottomNavigationBarItem>[
+          items: const [
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
