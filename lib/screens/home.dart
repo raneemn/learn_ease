@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_ease/bottomNav/chatNav.dart';
 import 'package:learn_ease/bottomNav/homeNav.dart';
+import 'package:learn_ease/bottomNav/myCoursesNav.dart';
+import 'package:learn_ease/bottomNav/myProfileNav.dart';
+import 'package:learn_ease/bottomNav/searchNav.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({super.key});
@@ -11,6 +15,20 @@ class HomePage2 extends StatefulWidget {
 }
 
 class _HomePage2State extends State<HomePage2> {
+  List<Widget> _widgetOptions = [
+    HomeNav(),
+    SearchNav(),
+    MyCoursesNav(),
+    ChatNav(),
+    MyProfileNav(),
+  ];
+  int _currentIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,9 +103,11 @@ class _HomePage2State extends State<HomePage2> {
               backgroundColor: Color.fromRGBO(104, 73, 239, 1),
             ),
           ],
+          onTap: (value) => _onItemTapped(value),
+          currentIndex: _currentIndex,
         ),
       ),
-      body: HomeNav(),
+      body: _widgetOptions[_currentIndex],
     );
   }
 }

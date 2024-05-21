@@ -77,7 +77,7 @@ class _AboutCourseState extends State<AboutCourse> {
           SizedBox(
             height: 5,
           ),
-          Text(
+          const Text(
             'Lorem ipsum dolor sit amet consectetur. Urna integer volutpat ullamcorper in. Sed interdum ultricies mi habitant sagittis mauris. Venenatis libero malesuada viverra cras ullamcorper. Lacus dignissim semper ultrices ornare a. Read More',
             style: TextStyle(
                 fontSize: 12, color: Color.fromRGBO(116, 116, 116, 1)),
@@ -167,7 +167,7 @@ class _AboutCourseState extends State<AboutCourse> {
             style: TextStyle(color: Colors.grey, fontSize: 12),
           ),
           Text(
-            "100.00",
+            "100.00 \$",
             style: TextStyle(color: Colors.black, fontSize: 24),
           ),
           Row(
