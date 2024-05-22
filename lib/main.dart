@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learn_ease/Course/CourseMain.dart';
+import 'package:learn_ease/bottomNav/myCoursesNav.dart';
+import 'package:learn_ease/buyCourse/addCart.dart';
+import 'package:learn_ease/buyCourse/confirmation.dart';
+import 'package:learn_ease/buyCourse/overview.dart';
+import 'package:learn_ease/buyCourse/paymentMethod.dart';
 import 'package:learn_ease/screens/home.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
@@ -26,6 +31,11 @@ class learnEase extends StatelessWidget {
         UserProfile.routeName: (context) => const UserProfile(),
         HomePage2.routeName: (context) => const HomePage2(),
         Course.routeName: (context) => const Course(),
+        Overview.routeName: (context) => const Overview(),
+        PaymentMethod.routeName: (context) => const PaymentMethod(),
+        Confirmation.routeName: (context)=> const Confirmation(),
+        AddCart.routeName:(context) => AddCart(),
+        MyCoursesNav.routeName :(context) => MyCoursesNav(),
       },
       initialRoute: '/',
     );

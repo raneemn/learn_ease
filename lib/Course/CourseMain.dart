@@ -5,6 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:learn_ease/Course/aboutCourse.dart';
 import 'package:learn_ease/Course/lessonsCourse.dart';
 import 'package:learn_ease/Course/reviewsCourse.dart';
+import 'package:learn_ease/buyCourse/overview.dart';
 
 class Course extends StatefulWidget {
   const Course({super.key});
@@ -168,7 +169,9 @@ class _CourseState extends State<Course> {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Overview.routeName);
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(104, 73, 239, 1),
                     shape: RoundedRectangleBorder(
