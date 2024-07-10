@@ -3,6 +3,7 @@ import 'package:learn_ease/packages/loginAndReg.dart';
 import 'package:learn_ease/packages/userInfo.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -32,6 +33,17 @@ class _SignUpState extends State<SignUp> {
   }
 
   String email = 'fredrik.eilertsen@gail.com';
+
+  Future<String?> register(String email, String password) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      return null;
+    } on FirebaseAuthException catch (ex) {
+      print(ex.message);
+      return '${ex.code}: ${ex.message}';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,8 +230,8 @@ class _SignUpState extends State<SignUp> {
 
                               allUsers.add(_userData!);
                               print(_userData);
-                              Navigator.pushNamed(context, SignIn.routeName,
-                                  arguments: UserClass(allUsers!));
+                              register(_email!, _password!.toString()); // for firebase register
+                              // Navigator.pushNamed(context, SignIn.routeName, arguments: UserClass(allUsers!));
                             } else {
                               print('Sign up failed');
                             }

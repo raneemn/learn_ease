@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "709956442661",
+    "project_id": "learnease-11fe6",
+    "storage_bucket": "learnease-11fe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709956442661:android:5fba658c4df8b231eebdcc",
+        "android_client_info": {
+          "package_name": "com.example.learn_ease"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTMCPxnycNt9BlW65yDokg-57naKjuNA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

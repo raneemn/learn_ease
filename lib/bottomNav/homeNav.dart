@@ -12,7 +12,32 @@ class HomeNav extends StatefulWidget {
 class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const ListTile(
+          title: Text('Welcome'),
+          subtitle: Text(
+            'UserName',
+            style: TextStyle(
+                color: const Color.fromRGBO(104, 73, 239, 1),
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+        ),
+        actions: const [
+          Icon(
+            Icons.shopping_cart,
+            color: Color.fromRGBO(149, 128, 244, 1),
+          ),
+          Icon(
+            Icons.notifications,
+            color: Color.fromRGBO(149, 128, 244, 1),
+          )
+        ],
+      ),
+
+      body: Container(
       margin: EdgeInsets.only(right: 15, left: 15, top: 10),
       child: Column(
         children: [
@@ -306,6 +331,7 @@ class _HomeNavState extends State<HomeNav> {
           ),
         ],
       ),
+    )
     );
   }
 }

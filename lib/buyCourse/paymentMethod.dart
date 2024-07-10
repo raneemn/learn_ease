@@ -132,6 +132,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                             onTap: () {
                               setState(() {
                                 _isDropdownOpen = !_isDropdownOpen;
+                                _isCardSaved = !_isCardSaved;
                               });
                             },
                             child: _isDropdownOpen
@@ -142,9 +143,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     Container(
                         width: 325,
                         height: 100,
-                        child: _isCardSaved
-                            ? CardList()
-                            : Text('No Cridet/Debit Card Saved')),
+                        child: _isCardSaved ? CardList() : Text('')),
                     OutlinedButton.icon(
                         style: OutlinedButton.styleFrom(
                             fixedSize: Size(325, 39),

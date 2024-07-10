@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_ease/bottomNav/myCoursesNav.dart';
 
-class Confirmation extends StatefulWidget {
+class Confirmation extends StatefulWidget  {
   const Confirmation({super.key});
   static const routeName = '/confirmation';
 

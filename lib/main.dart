@@ -1,17 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_ease/Course/CourseMain.dart';
+import 'package:learn_ease/bottomNav/chatScreens/inbox.dart';
 import 'package:learn_ease/bottomNav/myCoursesNav.dart';
 import 'package:learn_ease/buyCourse/addCart.dart';
 import 'package:learn_ease/buyCourse/confirmation.dart';
 import 'package:learn_ease/buyCourse/overview.dart';
 import 'package:learn_ease/buyCourse/paymentMethod.dart';
+import 'package:learn_ease/firebase_options.dart';
 import 'package:learn_ease/screens/home.dart';
+import 'package:learn_ease/screens/imageAnimation.dart';
 import 'package:learn_ease/screens/page1.dart';
 import 'package:learn_ease/screens/sign_in.dart';
 import 'package:learn_ease/screens/sign_up.dart';
+import 'package:learn_ease/screens/themeData.dart';
 import 'package:learn_ease/screens/user_profile.dart';
+import 'package:learn_ease/view/learnEaseView.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const learnEase());
 }
 
@@ -33,11 +41,15 @@ class learnEase extends StatelessWidget {
         Course.routeName: (context) => const Course(),
         Overview.routeName: (context) => const Overview(),
         PaymentMethod.routeName: (context) => const PaymentMethod(),
-        Confirmation.routeName: (context)=> const Confirmation(),
-        AddCart.routeName:(context) => AddCart(),
-        MyCoursesNav.routeName :(context) => MyCoursesNav(),
+        Confirmation.routeName: (context) => const Confirmation(),
+        AddCart.routeName: (context) => AddCart(),
+        MyCoursesNav.routeName: (context) => MyCoursesNav(),
+        imageAnimation.routeName: (context) => imageAnimation(),
+        inbox.routeName: (context) => inbox(),
+        ThemeDataTest.routeName: (context) => ThemeDataTest(),
+        LearnEaseWidget.routeName : (context) => LearnEaseWidget(),
       },
-      initialRoute: '/',
+      initialRoute: LearnEaseWidget.routeName,
     );
   }
 }
@@ -105,8 +117,16 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     width: 400,
                     height: 350,
-                    child: Image.asset(
-                      images[currentIndex],
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ThemeDataTest.routeName);
+                      },
+                      child: Hero(
+                        tag: 'image1',
+                        child: Image.asset(
+                          images[currentIndex],
+                        ),
+                      ),
                     ),
                   ),
                   Container(
