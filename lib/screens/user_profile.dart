@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_ease/packages/userInfo.dart';
+import 'package:learn_ease/model/userInfo.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({super.key});

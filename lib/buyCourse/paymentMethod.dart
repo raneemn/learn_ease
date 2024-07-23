@@ -35,8 +35,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 decoration: BoxDecoration(
                     color: Color.fromRGBO(232, 228, 253, 1),
                     borderRadius: BorderRadius.circular(10)),
-                child: Stack(children: <Widget>[
-                  Divider(
+                child: const Stack(children: <Widget>[
+                   Divider(
                     height: 40,
                     thickness: 1,
                     indent: 10,

@@ -8,14 +8,19 @@ import 'package:learn_ease/buyCourse/confirmation.dart';
 import 'package:learn_ease/buyCourse/overview.dart';
 import 'package:learn_ease/buyCourse/paymentMethod.dart';
 import 'package:learn_ease/firebase_options.dart';
+import 'package:learn_ease/model/userInterest.dart';
 import 'package:learn_ease/screens/home.dart';
 import 'package:learn_ease/screens/imageAnimation.dart';
-import 'package:learn_ease/screens/page1.dart';
-import 'package:learn_ease/screens/sign_in.dart';
-import 'package:learn_ease/screens/sign_up.dart';
+import 'package:learn_ease/screens/optionScreen.dart';
+import 'package:learn_ease/view/emailVerificationView.dart';
+import 'package:learn_ease/view/forgetPassView.dart';
+import 'package:learn_ease/view/resetPassView.dart';
+import 'package:learn_ease/view/signInView.dart';
+import 'package:learn_ease/view/signUpView.dart';
 import 'package:learn_ease/screens/themeData.dart';
 import 'package:learn_ease/screens/user_profile.dart';
 import 'package:learn_ease/view/learnEaseView.dart';
+import 'package:learn_ease/view/userInterestView.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,24 +37,29 @@ class learnEase extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        Page1.routeName: (context) => const Page1(),
+        OptionScreenWgt.routeName: (context) => const OptionScreenWgt(),
         '/': (context) => HomePage(),
-        SignIn.routeName: (context) => const SignIn(),
-        SignUp.routeName: (context) => const SignUp(),
+        SignInWidget.routeName: (context) => const SignInWidget(),
+        SignUpView.routeName: (context) => const SignUpView(),
         UserProfile.routeName: (context) => const UserProfile(),
         HomePage2.routeName: (context) => const HomePage2(),
         Course.routeName: (context) => const Course(),
         Overview.routeName: (context) => const Overview(),
         PaymentMethod.routeName: (context) => const PaymentMethod(),
         Confirmation.routeName: (context) => const Confirmation(),
-        AddCart.routeName: (context) => AddCart(),
-        MyCoursesNav.routeName: (context) => MyCoursesNav(),
-        imageAnimation.routeName: (context) => imageAnimation(),
-        inbox.routeName: (context) => inbox(),
-        ThemeDataTest.routeName: (context) => ThemeDataTest(),
-        LearnEaseWidget.routeName : (context) => LearnEaseWidget(),
+        AddCart.routeName: (context) => const AddCart(),
+        MyCoursesNav.routeName: (context) => const MyCoursesNav(),
+        imageAnimation.routeName: (context) => const imageAnimation(),
+        inbox.routeName: (context) => const inbox(),
+        ThemeDataTest.routeName: (context) => const ThemeDataTest(),
+        LearnEaseWidget.routeName: (context) => const LearnEaseWidget(),
+        UserInterestWidget.routeName: (context) => const UserInterestWidget(),
+        ForgetPassWidget.routeName: (context) => const ForgetPassWidget(),
+        EmailVerificationWidget.routeName: (context) =>
+            const EmailVerificationWidget(),
+        ResetPassWidget.routeName: (context) => const ResetPassWidget(),
       },
-      initialRoute: LearnEaseWidget.routeName,
+      initialRoute: UserInterestWidget.routeName,
     );
   }
 }
@@ -180,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (buttonText == 'GO TO THE APP') {
-                      Navigator.pushNamed(context, Page1.routeName);
+                      Navigator.pushNamed(context, OptionScreenWgt.routeName);
                     }
                     setState(() {
                       if (currentIndex < images.length - 1) {

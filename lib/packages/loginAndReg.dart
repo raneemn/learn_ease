@@ -1,4 +1,4 @@
-import 'package:learn_ease/packages/userInfo.dart';
+import 'package:learn_ease/model/userInfo.dart';
 
 class UserClass {
     List<userInfo> allUsers ;
