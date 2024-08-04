@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_ease/model/courseInfo.dart';
 
 class LessonsCourse extends StatefulWidget {
   const LessonsCourse({super.key});
@@ -12,6 +13,8 @@ class LessonsCourse extends StatefulWidget {
 class _LessonsCourseState extends State<LessonsCourse> {
   @override
   Widget build(BuildContext context) {
+    final courseInfo args =
+        ModalRoute.of(context)!.settings.arguments as courseInfo;
     return Container(
       margin: EdgeInsets.only(top: 15, left: 20, right: 20),
       child: Column(
@@ -26,7 +29,7 @@ class _LessonsCourseState extends State<LessonsCourse> {
                   color: Color.fromRGBO(104, 73, 239, 1),
                 ),
                 Text(
-                  'By Robert James',
+                  args.courseInstructor!,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 SizedBox(
@@ -37,7 +40,7 @@ class _LessonsCourseState extends State<LessonsCourse> {
                   color: Color.fromRGBO(104, 73, 239, 1),
                 ),
                 Text(
-                  '60 Lessons',
+                  '${args.numOfLessons} Lessons',
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 SizedBox(
@@ -48,7 +51,7 @@ class _LessonsCourseState extends State<LessonsCourse> {
                   color: Color.fromRGBO(104, 73, 239, 1),
                 ),
                 Text(
-                  '20hrs 45mins',
+                  args.totalLengthHours!,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
@@ -59,7 +62,7 @@ class _LessonsCourseState extends State<LessonsCourse> {
             height: 450,
             child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: 20,
+                itemCount: int.parse(args.numOfLessons!),
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.only(top: 5),
@@ -80,11 +83,11 @@ class _LessonsCourseState extends State<LessonsCourse> {
                         style: TextStyle(fontSize: 14),
                       ),
                       title: Text(
-                        ' Introduction to Website Design?',
+                        ' Lesson ${index + 1}',
                         style: TextStyle(fontSize: 14),
                       ),
                       subtitle: Text(
-                        '3:45',
+                        '15:00',
                         style: TextStyle(fontSize: 14),
                       ),
                       trailing: Icon(

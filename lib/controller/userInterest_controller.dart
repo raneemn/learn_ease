@@ -45,4 +45,17 @@ class UserInterestController {
       throw Exception('failed update data');
     }
   }
+
+  Future<bool> deleteInterest(String id) async {
+    final response = await http.delete(Uri.parse(baseUrl + '$id'), headers: {
+      'Content-Type': 'application/json',
+    });
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 400) {
+      return false;
+    } else {
+      return false;
+    }
+  }
 }

@@ -163,10 +163,6 @@ class _UserInterestWidgetState extends State<UserInterestWidget> {
                 return Center(
                   child: Text('error ${snapshot.error}'),
                 );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(
-                  child: Text('no data'),
-                );
               } else {
                 return Column(
                   children: [
@@ -343,7 +339,15 @@ class _UserInterestWidgetState extends State<UserInterestWidget> {
                                   ),
                                   IconButton(
                                     iconSize: 20,
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      await _userInterestController
+                                          .deleteInterest(
+                                              snapshot.data![index].id);
+                                      setState(() {
+                                        items =
+                                            _userInterestController.fetchItem();
+                                      });
+                                    },
                                     icon: Icon(Icons.delete),
                                     color: Colors.red,
                                   ),

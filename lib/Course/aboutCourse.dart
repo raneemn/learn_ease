@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:learn_ease/model/courseInfo.dart';
+import 'package:learn_ease/packages/courseInfo.dart';
 
 class AboutCourse extends StatefulWidget {
-  const AboutCourse({super.key});
+  
+  AboutCourse({super.key});
 
   @override
   State<AboutCourse> createState() => _AboutCourseState();
@@ -12,6 +15,9 @@ class AboutCourse extends StatefulWidget {
 class _AboutCourseState extends State<AboutCourse> {
   @override
   Widget build(BuildContext context) {
+    final courseInfo args =
+        ModalRoute.of(context)!.settings.arguments as courseInfo;
+   
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Column(
@@ -24,7 +30,7 @@ class _AboutCourseState extends State<AboutCourse> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Website Design',
+                    args.courseName!,
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   Row(
@@ -34,7 +40,7 @@ class _AboutCourseState extends State<AboutCourse> {
                         color: Colors.grey,
                       ),
                       Text(
-                        'By Robert James',
+                        args.courseInstructor!,
                         style: TextStyle(fontSize: 11, color: Colors.grey),
                       ),
                     ],
@@ -51,7 +57,7 @@ class _AboutCourseState extends State<AboutCourse> {
                           Icons.star,
                           color: Color.fromRGBO(104, 73, 239, 1),
                         ),
-                        rating: 2.5,
+                        rating: args.courseRating!,
                         itemCount: 5,
                         itemSize: 15,
                         direction: Axis.horizontal,
@@ -61,13 +67,13 @@ class _AboutCourseState extends State<AboutCourse> {
                         width: 5,
                       ),
                       Text(
-                        '2.5',
+                        args.courseRating.toString(),
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       )
                     ],
                   ),
                   Text(
-                    '(14,670 reviews)',
+                    args.numOfReviews!,
                     style: TextStyle(fontSize: 11, color: Colors.grey),
                   )
                 ],
@@ -77,8 +83,8 @@ class _AboutCourseState extends State<AboutCourse> {
           SizedBox(
             height: 5,
           ),
-          const Text(
-            'Lorem ipsum dolor sit amet consectetur. Urna integer volutpat ullamcorper in. Sed interdum ultricies mi habitant sagittis mauris. Venenatis libero malesuada viverra cras ullamcorper. Lacus dignissim semper ultrices ornare a. Read More',
+          Text(
+            args.courseDescription!,
             style: TextStyle(
                 fontSize: 12, color: Color.fromRGBO(116, 116, 116, 1)),
             overflow: TextOverflow.ellipsis,
@@ -92,7 +98,7 @@ class _AboutCourseState extends State<AboutCourse> {
             decoration: BoxDecoration(
                 color: Color.fromRGBO(232, 228, 253, 1),
                 borderRadius: BorderRadius.circular(10)),
-            child: const Column(
+            child: Column(
               children: [
                 Row(
                   children: [
@@ -104,7 +110,7 @@ class _AboutCourseState extends State<AboutCourse> {
                       width: 10,
                     ),
                     Text(
-                      '60 Lessons',
+                      '${args.numOfLessons} Lessons',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     SizedBox(
@@ -118,7 +124,7 @@ class _AboutCourseState extends State<AboutCourse> {
                       width: 10,
                     ),
                     Text(
-                      'English',
+                      args.courseLanguage!,
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     )
                   ],
@@ -136,7 +142,7 @@ class _AboutCourseState extends State<AboutCourse> {
                       width: 10,
                     ),
                     Text(
-                      '20hrs 45mins',
+                      args.totalLengthHours!,
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     SizedBox(
@@ -150,7 +156,7 @@ class _AboutCourseState extends State<AboutCourse> {
                       width: 10,
                     ),
                     Text(
-                      'Certificate',
+                      args.courseCertificated!,
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     )
                   ],
@@ -162,12 +168,12 @@ class _AboutCourseState extends State<AboutCourse> {
             height: 25,
           ),
           Text(
-            'Total Price',
+            args.coursePrice!,
             textAlign: TextAlign.start,
             style: TextStyle(color: Colors.grey, fontSize: 12),
           ),
           Text(
-            "100.00 \$",
+            args.coursePrice!,
             style: TextStyle(color: Colors.black, fontSize: 24),
           ),
           Row(
@@ -177,7 +183,7 @@ class _AboutCourseState extends State<AboutCourse> {
                 color: Color.fromRGBO(104, 73, 239, 1),
               ),
               Text(
-                '15% Off- 3 days left',
+                '${args.couponValue} - ${args.couponValidate}',
                 style: TextStyle(color: Colors.grey, fontSize: 13),
               ),
             ],
@@ -197,7 +203,7 @@ class _AboutCourseState extends State<AboutCourse> {
               child: ListTile(
                 leading: Image.asset('assets/images/teacher1.png'),
                 title: Text(
-                  'Robert James',
+                  args.courseInstructor!,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(

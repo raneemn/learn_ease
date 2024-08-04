@@ -6,6 +6,7 @@ import 'package:learn_ease/Course/aboutCourse.dart';
 import 'package:learn_ease/Course/lessonsCourse.dart';
 import 'package:learn_ease/Course/reviewsCourse.dart';
 import 'package:learn_ease/buyCourse/overview.dart';
+import 'package:learn_ease/model/courseInfo.dart';
 
 class Course extends StatefulWidget {
   const Course({super.key});
@@ -19,6 +20,7 @@ class _CourseState extends State<Course> {
   Color selectedColor = Colors.white;
   Color selectedBGcolor = Color.fromRGBO(104, 73, 239, 0.7);
   int _currentIndex = 0;
+ 
 
   List<Widget> selectedWidget = [
     AboutCourse(),
@@ -34,6 +36,9 @@ class _CourseState extends State<Course> {
 
   @override
   Widget build(BuildContext context) {
+    final courseInfo args =
+        ModalRoute.of(context)!.settings.arguments as courseInfo;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

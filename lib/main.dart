@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:learn_ease/Course/CourseMain.dart';
 import 'package:learn_ease/bottomNav/chatScreens/inbox.dart';
 import 'package:learn_ease/bottomNav/myCoursesNav.dart';
+import 'package:learn_ease/bottomNav/myProfileNav.dart';
 import 'package:learn_ease/buyCourse/addCart.dart';
 import 'package:learn_ease/buyCourse/confirmation.dart';
 import 'package:learn_ease/buyCourse/overview.dart';
 import 'package:learn_ease/buyCourse/paymentMethod.dart';
 import 'package:learn_ease/firebase_options.dart';
 import 'package:learn_ease/model/userInterest.dart';
-import 'package:learn_ease/screens/home.dart';
+import 'package:learn_ease/screens/homePage2.dart';
 import 'package:learn_ease/screens/imageAnimation.dart';
 import 'package:learn_ease/screens/optionScreen.dart';
 import 'package:learn_ease/view/emailVerificationView.dart';
@@ -49,6 +50,7 @@ class learnEase extends StatelessWidget {
         Confirmation.routeName: (context) => const Confirmation(),
         AddCart.routeName: (context) => const AddCart(),
         MyCoursesNav.routeName: (context) => const MyCoursesNav(),
+        MyProfileNav.routeName: (context)=> MyProfileNav(),
         imageAnimation.routeName: (context) => const imageAnimation(),
         inbox.routeName: (context) => const inbox(),
         ThemeDataTest.routeName: (context) => const ThemeDataTest(),
@@ -58,8 +60,9 @@ class learnEase extends StatelessWidget {
         EmailVerificationWidget.routeName: (context) =>
             const EmailVerificationWidget(),
         ResetPassWidget.routeName: (context) => const ResetPassWidget(),
+
       },
-      initialRoute: UserInterestWidget.routeName,
+      initialRoute: '/',
     );
   }
 }
@@ -220,7 +223,7 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, HomePage2.routeName);
+                  Navigator.pushNamed(context, SignUpView.routeName);
                 },
                 child: const Text('Skip',
                     style: TextStyle(

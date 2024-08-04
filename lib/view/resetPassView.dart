@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learn_ease/controller/userInfo_controller.dart';
 import 'package:learn_ease/model/userInfo.dart';
+import 'package:learn_ease/screens/homePage2.dart';
+import 'package:learn_ease/view/signInView.dart';
 
 class ResetPassWidget extends StatefulWidget {
   const ResetPassWidget({super.key});
@@ -14,14 +16,14 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
   final UserinfoController _userinfoController = UserinfoController();
   final GlobalKey<FormState> _key = GlobalKey();
   late Future<List<userInfo>> allUsers;
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _newPassword = TextEditingController();
   final TextEditingController? _confirmPassword = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allUsers = _userinfoController.fetchItem();
+    allUsers = _userinfoController.getUserData();
   }
 
   String? validatePassword(String value) {
@@ -36,6 +38,7 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as userInfo;
+
     print(args);
     return Scaffold(
         appBar: AppBar(),
@@ -54,15 +57,15 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: const Text(
+                      const Center(
+                        child: Text(
                           'Reset Password',
                           style: TextStyle(
                               fontSize: 34, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 20, left: 15),
+                        margin: const EdgeInsets.only(top: 20, left: 15),
                         child: const Text(
                           'Your New Password must be different from Previously used password.',
                           style: TextStyle(fontSize: 14),
@@ -92,13 +95,15 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
                                       ),
                                       hintText: '************',
                                     ),
-                                    controller: _password,
+                                    controller: _newPassword,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'Please enter password';
                                       } else if (validatePassword(value) !=
                                           null) {
                                         return 'password must contains at least(8-character,Upper+Lower case,number,symbol)';
+                                      } else if (value == args.password) {
+                                        return 'New Password must be different from Previously password';
                                       }
                                       return null;
                                     },
@@ -110,9 +115,9 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
                                 margin: const EdgeInsets.only(top: 25),
                                 child: ListTile(
                                   title: Container(
-                                      margin: EdgeInsets.only(bottom: 7),
+                                      margin: const EdgeInsets.only(bottom: 7),
                                       child: const Text('Confirm Password')),
-                                  titleTextStyle: TextStyle(
+                                  titleTextStyle: const TextStyle(
                                     color: Colors.black,
                                   ),
                                   subtitle: TextFormField(
@@ -128,7 +133,7 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'Enter the same password';
-                                      } else if (value != _password.text) {
+                                      } else if (value != _newPassword.text) {
                                         return 'password not match';
                                       }
                                       return null;
@@ -145,6 +150,17 @@ class _ResetPassWidgetState extends State<ResetPassWidget> {
                                       if (_key.currentState!.validate()) {
                                         _key.currentState!.save();
                                         //update password and save it in mongodb
+                                        _userinfoController
+                                            .updatePassword(
+                                                args.id!, _newPassword.text)
+                                            .then((result) {
+                                          if (result) {
+                                            Navigator.pushNamed(context,
+                                                SignInWidget.routeName);
+                                          } else {
+                                            print('Reset password failed');
+                                          }
+                                        });
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

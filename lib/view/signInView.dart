@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_ease/controller/userInfo_controller.dart';
 import 'package:learn_ease/packages/loginAndReg.dart';
 import 'package:learn_ease/model/userInfo.dart';
-import 'package:learn_ease/screens/home.dart';
+import 'package:learn_ease/screens/homePage2.dart';
 import 'package:learn_ease/screens/themeData.dart';
 import 'package:learn_ease/view/forgetPassView.dart';
 import 'package:learn_ease/view/signUpView.dart';
@@ -24,6 +24,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   final GlobalKey<FormState> _key = GlobalKey();
   final UserinfoController _userinfoController = UserinfoController();
   late Future<List<userInfo>> allUsers;
+  userInfo? userData;
 
   String? validatePassword(String value) {
     RegExp regex =
@@ -34,45 +35,25 @@ class _SignInWidgetState extends State<SignInWidget> {
     return null;
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    allUsers = UserinfoController().fetchItem();
-  }
-
-  List<userInfo> findEmail(List<userInfo> list, String value) {
+  userInfo findEmail(List<userInfo> list, String value) {
     List<userInfo> founded = list
         .where(
           (mapObject) => (mapObject.email as String).startsWith(value),
         )
         .toList();
-    if (founded.isEmpty) {}
-    return founded;
+
+    return founded.first;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    allUsers = UserinfoController().getUserData();
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _showMyDialog(String errorTitle, String errorMsg) async {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text(
-            errorTitle,
-            textAlign: TextAlign.center,
-          ),
-          content: Text(errorMsg,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 25)),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
         body: Center(
       child: Container(
@@ -165,7 +146,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                                       Navigator.pushNamed(
                                           context, ForgetPassWidget.routeName);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Forget Password?',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -191,6 +172,8 @@ class _SignInWidgetState extends State<SignInWidget> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter password';
+                                } else if (validatePassword(value) != null) {
+                                  return 'password must contains at least(8-character,Upper+Lower case,number,symbol)';
                                 }
                                 return null;
                               },
@@ -202,32 +185,34 @@ class _SignInWidgetState extends State<SignInWidget> {
                           width: 330,
                           height: 50,
                           child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_key.currentState!.validate()) {
                                   _key.currentState!.save();
-                                  List<userInfo> isEmailExist =
-                                      findEmail(snapshot.data!, _email!);
 
-                                  if (isEmailExist.isEmpty) {
-                                    _showMyDialog('Email',
-                                        'This email is not register yet, Sign up please');
-                                  } else {
-                                    for (userInfo registeredUser
-                                        in isEmailExist) {
-                                      print(registeredUser.password);
-                                      if (_pass == registeredUser.password) {
-                                        print('pass Oooooook');
-                                        Navigator.pushNamed(
-                                          context,
-                                          HomePage2.routeName,
-                                        );
-                                      } else {
-                                        _showMyDialog(
-                                            'password', 'password not correct');
-                                      }
+                                  userData =
+                                      userInfo(email: _email, password: _pass);
+                                  await _userinfoController
+                                      .signIn(userData!)
+                                      .then((result) {
+                                    if (result) {
+                                      final userSignedIn =
+                                          findEmail(snapshot.data!, _email!);
+                                      print(userSignedIn.id);
+
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                              HomePage2.routeName,
+                                              (route) => false,
+                                              arguments: userSignedIn);
+                                    } else {
+                                      final snackBar = SnackBar(
+                                        content: const Text(
+                                            'Invalid email or password.'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                     }
-                                    print('element is: $isEmailExist');
-                                  }
+                                  });
                                 }
                               },
                               style: ElevatedButton.styleFrom(

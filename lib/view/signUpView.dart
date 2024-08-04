@@ -24,8 +24,15 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController? _confirmPassword = TextEditingController();
   final UserinfoController _userinfoController = UserinfoController();
   late Future<List<userInfo>> userData;
+  List<userInfo> userExist = [];
+  var newUser;
 
-  List<userInfo> allUsers = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userData = UserinfoController().getUserData();
+  }
 
   String? validatePassword(String value) {
     RegExp regex =
@@ -47,19 +54,36 @@ class _SignUpViewState extends State<SignUpView> {
     }
   }
 
-  void addUserInfo() async {
+ /* Future<bool> addUserInfo() async {
     try {
       final newUser = userInfo(
           fName: _fName,
           lName: _lName,
           email: _email,
           password: _password.text);
-      final addUser = await _userinfoController.addUserInfo(newUser);
-
-      print(newUser.password);
+      final addUser =
+          await _userinfoController.register(newUser).then((result) {
+        if (result) {
+          print('register done');
+          return true;
+        } else {
+          print('register failed');
+          return false;
+        }
+      });
     } catch (e) {
-      print(e);
+      return false;
     }
+  }*/
+
+  List<userInfo> findEmail(List<userInfo> list, String value) {
+    List<userInfo> founded = list
+        .where(
+          (mapObject) => (mapObject.email as String).startsWith(value),
+        )
+        .toList();
+    if (founded.isEmpty) {}
+    return founded;
   }
 
   @override
@@ -169,27 +193,52 @@ class _SignUpViewState extends State<SignUpView> {
                         titleTextStyle: TextStyle(
                           color: Colors.black,
                         ),
-                        subtitle: TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                            ),
-                            hintText: 'Contact@gmail.com',
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter your email';
-                            } else if (!EmailValidator.validate(value)) {
-                              return 'Please enter valid email';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _email = value!;
-                          },
-                        ),
+                        subtitle: FutureBuilder(
+                            future: userData,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('error ${snapshot.error}'),
+                                );
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                return const Center(
+                                  child: Text('no data'),
+                                );
+                              } else {
+                                return TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    hintText: 'Contact@gmail.com',
+                                  ),
+                                  validator: (value) {
+                                    userExist =
+                                        findEmail(snapshot.data!, value!);
+                                    if (value!.isEmpty) {
+                                      return 'Enter your email';
+                                    } else if (!EmailValidator.validate(
+                                        value)) {
+                                      return 'Please enter valid email';
+                                    } else if (!userExist.isEmpty) {
+                                      return 'This Email is already registered, Sign in please';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _email = value!;
+                                  },
+                                );
+                              }
+                            }),
                       ),
                     ),
                     Container(
@@ -259,12 +308,28 @@ class _SignUpViewState extends State<SignUpView> {
                       width: 330,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: ()  {
                             if (_key.currentState!.validate()) {
                               _key.currentState!.save();
-                              addUserInfo();
-                              Navigator.pushNamed(
-                                  context, SignInWidget.routeName);
+                              newUser = userInfo(
+                                  fName: _fName,
+                                  lName: _lName,
+                                  email: _email,
+                                  password: _password.text);
+                              _userinfoController
+                                  .register(newUser)
+                                  .then((result) {
+                                if (result) {
+                                  print('register done');
+                                  Navigator.pushNamed(
+                                    context, SignInWidget.routeName);
+                                  
+                                } else {
+                                  print('register failed');
+                                  
+                                }
+                              });
+                             
                               // for firebase register
                               /*register(
                                   _email!,
@@ -300,8 +365,10 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, SignInWidget.routeName,
-                              arguments: UserClass(allUsers));
+                          Navigator.pushNamed(
+                            context,
+                            SignInWidget.routeName,
+                          );
                         },
                         child: const Text('Already Have an account? Sign In')),
                   ],

@@ -1,17 +1,21 @@
 class userInfo {
+  String? id;
   String? fName;
   String? lName;
   String? email;
   String? password;
 
   userInfo(
-      {required this.fName,
-      required this.lName,
+      {
+        this.id = '',
+         this.fName,
+       this.lName,
       required this.email,
       required this.password});
 
   factory userInfo.fromJson(Map<String, dynamic> json) {
     return userInfo(
+      id: json['_id'],
         fName: json['firstName'],
         lName: json['lastName'],
         email: json['email'],
@@ -27,9 +31,8 @@ class userInfo {
     };
   }
 
-   @override
-   String toString() {
-    return 'fName: $fName, lName: $lName, email: $email, password: $password'; // you can add more values to be printed
+  @override
+  String toString() {
+    return 'id: $id, fName: $fName, lName: $lName, email: $email, password: $password'; // you can add more values to be printed
   }
-  
 }

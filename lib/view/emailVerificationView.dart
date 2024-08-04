@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learn_ease/model/userInfo.dart';
+import 'package:learn_ease/view/forgetPassView.dart';
 import 'package:learn_ease/view/resetPassView.dart';
+import 'package:learn_ease/view/signUpView.dart';
 
 class EmailVerificationWidget extends StatefulWidget {
   const EmailVerificationWidget({super.key});
@@ -17,10 +19,12 @@ class _EmailVerificationWidgetState extends State<EmailVerificationWidget> {
   TextEditingController digit3 = TextEditingController();
   TextEditingController digit4 = TextEditingController();
   bool invalidOTP = false;
+  var args;
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as userInfo;
+    
+ args = ModalRoute.of(context)!.settings.arguments as userInfo;
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -28,14 +32,14 @@ class _EmailVerificationWidgetState extends State<EmailVerificationWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: const Text(
+            const Center(
+              child: Text(
                 'Email Verification',
                 style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 20, left: 15),
+              margin: const EdgeInsets.only(top: 20, left: 15),
               child: const Text(
                 'Get Your Code',
                 style: TextStyle(fontSize: 14),
@@ -106,7 +110,8 @@ class _EmailVerificationWidgetState extends State<EmailVerificationWidget> {
                         setState(() {
                           invalidOTP = false;
                         });
-                        Navigator.pushNamed(context, ResetPassWidget.routeName,arguments: args);
+                        Navigator.pushNamed(context, ResetPassWidget.routeName,
+                            arguments: args);
                       } else {
                         setState(() {
                           invalidOTP = true;

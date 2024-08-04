@@ -23,7 +23,7 @@ class _ForgetPassWidgetState extends State<ForgetPassWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allUsers = _userinfoController.fetchItem();
+    allUsers = _userinfoController.getUserData();
   }
 
   List<userInfo> findEmail(List<userInfo> list, String value) {
